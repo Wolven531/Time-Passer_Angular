@@ -1,0 +1,69 @@
+<!doctype html>
+<html ng-app="timePasser">
+  <head>
+    <title>Time Passer</title>
+    <link href="/css/style.css" rel="stylesheet" />
+    <link href="/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/css/bootstrap-theme.min.css" rel="stylesheet" />
+    <script src="/js/jquery-2.1.4.min.js"></script>
+    <script src="/js/angular.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/models/worker_cache.js"></script>
+    <script src="/js/game_loop.js"></script>
+  </head>
+  <body>
+    <h2>Time Passer</h2>
+    <!--
+    <div ng-controller="PlayerNameController">
+      <input
+        id="player_name"
+        name="player_name"
+        ng-model="player_name"
+        type="text"
+        placeholder="Enter your name" />
+      <p>{{player_name}}</p>
+    </div>
+    -->
+    <div ng-controller="wealthController">
+      <p>
+        Current money: {{player_money | currency}}
+        <br />
+        Spent money: {{money_spent | currency}}
+      </p>
+      <div id="wealth_display">
+        <input
+          id="wealth_btn" name="wealth_btn" class="positive" type="button"
+          value="Make Money ({{money_profit | currency}})"
+          ng-click="makeMoney()"/>
+      </div>
+      <div id="purchase_display" class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+        <div id="mode_display">
+          Mode: <input type="button"
+            ng-repeat="val in [1, 10, 100]"
+            value="x{{val}}"
+            ng-class="{active: purchase_mode === val }"
+            ng-click="setPurchaseMode(val)" />
+        </div>
+        <div ng-repeat="(unitName, unit) in unitCache.getAllUnits()">
+          <input
+            id="buy_{{unitName}}_btn" name="buy_{{unitName}}_btn" class="negative purchase_btn" type="button"
+            value="Buy {{purchase_mode}} {{unit.getName()}}{{purchase_mode > 1 ? 's':''}} ({{unit.getAdjustedCost(purchase_mode) | bigNum}})"
+            ng-click="buyUnit(unitName)"
+            ng-disabled="!canBuyUnit(unitName)"/>
+          <div class="earns_display">Earns {{unit.getProfit() * purchase_mode | currency}} every {{unit.getTick()}} secs</div>
+        </div>
+      </div>
+      <div id="income_display" class="col-lg-8 col-md-8 col-sm-8 col-xs-6">
+        <h3>Current Income</h3>
+        <p ng-repeat="(unitName, unit) in unitCache.getAllUnits()">
+          {{unitCache.getUnitCount(unitName) | number}} {{unit.getName()}}{{unitCache.getUnitCount(unitName) > 1 || unitCache.getUnitCount(unitName) === 0 ? 's':''}} =
+            {{unit.getProfit() * unitCache.getUnitCount(unitName) | currency}}
+            every {{unit.getTick()}} secs
+        </p>
+        <p>
+          Total Income Per Second: {{getTotalIncome() | currency}}
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

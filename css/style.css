@@ -1,0 +1,30 @@
+.active {
+  background-color: #ffa;
+  font-weight: bold;
+}
+.negative {
+  color: #f00;
+}
+.positive {
+  color: #0a0;
+}
+.purchase_btn {
+}
+.earns_display {
+  margin-bottom: 15px;
+}
+#wealth_display {
+  margin-bottom: 25px;
+}
+#purchase_display,
+#income_display {
+  border: 1px solid #333;
+  overflow: scroll;
+}
+
+#purchase_display {
+  min-width: 250px;
+}
+#mode_display {
+  margin-bottom: 15px;
+}
